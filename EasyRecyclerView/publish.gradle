@@ -1,0 +1,32 @@
+apply plugin: 'maven-publish' // Apply this plugin at the top of your library build.gradle
+
+afterEvaluate {
+    publishing {
+        publications {
+            bar(MavenPublication) {
+                // Replace with your own group ID.
+                groupId 'com.thphuoc.erc'
+
+                // Replace with the name of your library
+                artifactId 'EasyRecyclerView'
+                version '1.0.1'
+                artifact("$buildDir/outputs/aar/EasyRecyclerView-release.aar")
+            }
+        }
+
+        repositories {
+            maven {
+                name = "GitHubPackages"
+
+                // Replace GITHUB_USERID with your personal or organisation user ID and
+                // REPOSITORY with the name of the repository on GitHub
+                url = uri("https://maven.pkg.github.com/thphuoc/easyrecyclerview")
+
+                credentials {
+                    username = "thphuoc"
+                    password = "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"
+                }
+            }
+        }
+    }
+}

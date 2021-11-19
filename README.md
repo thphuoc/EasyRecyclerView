@@ -1,5 +1,9 @@
 # EasyRecyclerView
 
+![alt screenshot](/screenshot.png "Text to show on mouseover")
+
+![alt screenshot](/SharedScreenshot.jpg "Text to show on mouseover")
+
 Why we have to define adapter for a RecyclerView. It's very take time when we have a lot of list view right?
 With Easy RecyclerView we just need to care about 2 things
 1. Data Object Model (DAO)

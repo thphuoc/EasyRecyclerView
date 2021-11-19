@@ -18,7 +18,6 @@ class EasyRecyclerView @JvmOverloads constructor(
     fun addItem(data: EasyItemViewBinder, index: Int = mAdapter.itemCount) {
         mAdapter.addItem(data, index)
         mAdapter.notifyItemInserted(max(0, index))
-        smoothScrollToPosition(index)
     }
 
     fun removeItem(data: EasyItemViewBinder) {

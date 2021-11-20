@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
+        listView.disableRecycled(R.layout.item_view_header)
+
         listView.addItem(HeaderItemViewBinder(this, "Header1"))
 
         var pageIndex = 0

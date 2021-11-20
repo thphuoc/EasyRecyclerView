@@ -7,35 +7,39 @@ import androidx.recyclerview.widget.RecyclerView
 
 class EasyListAdapter(private val context: Context) : RecyclerView.Adapter<EasyViewHolder>() {
 
-    val datas = arrayListOf<EasyItemViewBinder>()
+    private val viewBinders = arrayListOf<EasyItemViewBinder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EasyViewHolder {
         return EasyViewHolder(LayoutInflater.from(context).inflate(viewType, parent, false))
     }
 
     override fun getItemViewType(position: Int): Int {
-        return datas[position].viewResId
+        return viewBinders[position].viewResId
+    }
+
+    override fun onViewRecycled(holder: EasyViewHolder) {
+        holder.onViewDetached()
     }
 
     override fun onBindViewHolder(holder: EasyViewHolder, position: Int) {
-        holder.bind(datas[position])
+        holder.onViewAttached(viewBinders[position])
     }
 
-    override fun getItemCount(): Int = datas.size
+    override fun getItemCount(): Int = viewBinders.size
 
-    fun addItem(data: EasyItemViewBinder, index: Int = datas.size) {
-        datas.add(index, data)
+    fun addItem(data: EasyItemViewBinder, index: Int = viewBinders.size) {
+        viewBinders.add(index, data)
     }
 
     fun removeItem(data: EasyItemViewBinder): Int {
-        val itemIndex = datas.indexOf(data)
+        val itemIndex = viewBinders.indexOf(data)
         if (itemIndex >= 0) {
-            datas.remove(data)
+            viewBinders.remove(data)
         }
         return itemIndex
     }
 
     fun removeAll() {
-        datas.clear()
+        viewBinders.clear()
     }
 }

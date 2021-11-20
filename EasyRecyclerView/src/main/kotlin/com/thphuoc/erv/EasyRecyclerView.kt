@@ -43,6 +43,10 @@ class EasyRecyclerView @JvmOverloads constructor(
         }
     }
 
+    fun disableRecycled(layoutResId: Int) {
+        recycledViewPool.setMaxRecycledViews(layoutResId, 0)
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         this.adapter = mAdapter

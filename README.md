@@ -56,20 +56,19 @@ data class HeaderItemViewBinder(
 
 Step 3: In your Activity/Fragment add list of view binder
 ```kotlin
-listView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        repeat(10) {
-            listView.addItem(DataItemViewBinder(this, "Item1 $it") { data ->
-                listView.removeItem(data)
-            })
-        }
+repeat(10) {
+    listView.addItem(DataItemViewBinder(this, "Item1 $it") { data ->
+        listView.removeItem(data)
+    })
+}
 
-        listView.addItem(HeaderItemViewBinder(this, "Header1"))
+listView.addItem(HeaderItemViewBinder(this, "Header1"))
 
-        repeat(10) {
-            listView.addItem(DataItemViewBinder(this, "Item2 $it") { data ->
-                listView.removeItem(data)
-            })
-        }
+repeat(10) {
+    listView.addItem(DataItemViewBinder(this, "Item2 $it") { data ->
+        listView.removeItem(data)
+    })
+}
 ```
 
 Easy to handle load more:

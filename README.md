@@ -1,5 +1,6 @@
 # EasyRecyclerView
 
+Click on image to watch video
 [![IMAGE ALT TEXT HERE](/screenshot.png)](https://youtu.be/WVl4ox0PmcM)
 ![alt screenshot width="200"](/SharedScreenshot.jpg "Text to show on mouseover")
 

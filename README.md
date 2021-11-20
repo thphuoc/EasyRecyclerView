@@ -4,7 +4,9 @@
 
 ![alt screenshot width="200"](/SharedScreenshot.jpg "Text to show on mouseover")
 
-[![](/https://youtu.be/WVl4ox0PmcM)](https://youtu.be/WVl4ox0PmcM "")
+
+[![IMAGE ALT TEXT HERE](/screenshot.png)](https://youtu.be/WVl4ox0PmcM)
+
 
 Why we have to define adapter for a RecyclerView. It's very take time when we have a lot of list view right?
 With Easy RecyclerView we just need to care about 2 things

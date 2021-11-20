@@ -1,8 +1,10 @@
 # EasyRecyclerView
 
-![alt screenshot](/screenshot.png "Text to show on mouseover")
+![alt screenshot width="200"](/screenshot.png "Text to show on mouseover")
 
-![alt screenshot](/SharedScreenshot.jpg "Text to show on mouseover")
+![alt screenshot width="200"](/SharedScreenshot.jpg "Text to show on mouseover")
+
+[![](/screenshot.png)](/device-2021-11-20-121420.mp4 "")
 
 Why we have to define adapter for a RecyclerView. It's very take time when we have a lot of list view right?
 With Easy RecyclerView we just need to care about 2 things
@@ -90,4 +92,27 @@ listView.setLoadMore(LoadMoreViewBinder {
     }
 })
 
+```
+
+Define Layout type in xml:
+```xml
+<attr name="layout_type" format="enum">
+    <enum name="VERTICAL" value="0"/>
+    <enum name="HORIZONTAL" value="1"/>
+    <enum name="VGRID2" value="2"/>
+    <enum name="VGRID3" value="3"/>
+    <enum name="VGRID4" value="4"/>
+    <enum name="HGRID2" value="5"/>
+    <enum name="HGRID3" value="6"/>
+    <enum name="HGRID4" value="7"/>
+</attr>
+```
+Example:
+```xml
+<com.thphuoc.erv.EasyRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:id="@+id/hozList"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_type="HORIZONTAL"/>
 ```

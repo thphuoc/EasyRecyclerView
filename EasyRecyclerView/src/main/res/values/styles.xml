@@ -5,9 +5,12 @@
         <attr name="layout_type" format="enum">
             <enum name="VERTICAL" value="0"/>
             <enum name="HORIZONTAL" value="1"/>
-            <enum name="GRID2" value="2"/>
-            <enum name="GRID3" value="3"/>
-            <enum name="GRID4" value="4"/>
+            <enum name="VGRID2" value="2"/>
+            <enum name="VGRID3" value="3"/>
+            <enum name="VGRID4" value="4"/>
+            <enum name="HGRID2" value="5"/>
+            <enum name="HGRID3" value="6"/>
+            <enum name="HGRID4" value="7"/>
         </attr>
     </declare-styleable>
 </resources>

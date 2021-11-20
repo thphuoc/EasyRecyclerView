@@ -1,11 +1,7 @@
 # EasyRecyclerView
 
-![alt screenshot width="200"](/screenshot.png "Text to show on mouseover")
-
-![alt screenshot width="200"](/SharedScreenshot.jpg "Text to show on mouseover")
-
-
 [![IMAGE ALT TEXT HERE](/screenshot.png)](https://youtu.be/WVl4ox0PmcM)
+![alt screenshot width="200"](/SharedScreenshot.jpg "Text to show on mouseover")
 
 
 Why we have to define adapter for a RecyclerView. It's very take time when we have a lot of list view right?

@@ -27,9 +27,15 @@ class EasyListAdapter(private val context: Context) : RecyclerView.Adapter<EasyV
         datas.add(index, data)
     }
 
-    fun removeItem(data: EasyItemViewBinder) : Int {
+    fun removeItem(data: EasyItemViewBinder): Int {
         val itemIndex = datas.indexOf(data)
-        datas.remove(data)
+        if (itemIndex >= 0) {
+            datas.remove(data)
+        }
         return itemIndex
+    }
+
+    fun removeAll() {
+        datas.clear()
     }
 }

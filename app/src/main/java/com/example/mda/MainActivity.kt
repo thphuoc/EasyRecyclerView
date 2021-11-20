@@ -1,8 +1,10 @@
 package com.example.mda
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.thphuoc.erv.LoadMoreViewBinder
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,19 +20,31 @@ class MainActivity : AppCompatActivity() {
 
         listView.addItem(HeaderItemViewBinder(this, "Header1"))
 
+        var pageIndex = 0
+
         repeat(10) {
             listView.addItem(DataItemViewBinder(this, UserDAO("User2 $it")) { data ->
                 listView.removeItem(data)
             })
         }
 
-        listView.addItem(HeaderItemViewBinder(this, "Header2"))
+        listView.addItem(HozListViewBinder())
 
-        repeat(10) {
-            listView.addItem(DataItemViewBinder(this, UserDAO("User3 $it")) { data ->
-                listView.removeItem(data)
-            })
-        }
+        listView.setLoadMore(LoadMoreViewBinder {
+            if (pageIndex < 4) {
+                Handler().postDelayed({
+                    pageIndex++
+                    listView.loadCompleted()
+                    repeat(4) {
+                        listView.addItem(DataItemViewBinder(this, UserDAO("User2 $pageIndex$it")) { data ->
+                            listView.removeItem(data)
+                        })
+                    }
+                }, 1000L)
+            } else {
+                listView.noMoreToLoad()
+            }
+        })
 
         btnAddTop.setOnClickListener {
             listView.addItem(DataItemViewBinder(this, UserDAO("User Top")) { data ->

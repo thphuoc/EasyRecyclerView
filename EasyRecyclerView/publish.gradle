@@ -1,32 +1,32 @@
-apply plugin: 'maven-publish' // Apply this plugin at the top of your library build.gradle
+apply plugin: "com.jfrog.artifactory"
+apply plugin: "maven-publish" // Apply this plugin at the top of your library build.gradle
 
-afterEvaluate {
-    publishing {
-        publications {
-            bar(MavenPublication) {
-                // Replace with your own group ID.
-                groupId 'com.thphuoc.erc'
+build.finalizedBy(artifactoryPublish)
+artifactoryPublish.dependsOn(build)
+publishing {
+    publications {
+        AAR1(MavenPublication) {
+            groupId "com.thphuoc.erc"
+            artifactId "EasyRecyclerView"
+            version "1.0.1"
+            artifact("$buildDir/outputs/aar/EasyRecyclerView-release.aar")
 
-                // Replace with the name of your library
-                artifactId 'EasyRecyclerView'
-                version '1.0.1'
-                artifact("$buildDir/outputs/aar/EasyRecyclerView-release.aar")
-            }
         }
+    }
+}
 
-        repositories {
-            maven {
-                name = "GitHubPackages"
-
-                // Replace GITHUB_USERID with your personal or organisation user ID and
-                // REPOSITORY with the name of the repository on GitHub
-                url = uri("https://maven.pkg.github.com/thphuoc/easyrecyclerview")
-
-                credentials {
-                    username = "thphuoc"
-                    password = "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"
-                }
-            }
+artifactory {
+    contextUrl = "https://bintray.com/jfrog/artifactory:8080"
+    publish {
+        repository {
+            repoKey = 'default-gradle-dev'
+            username = 'tranhuuphuoc88@gmail.com'
+            password = 'AP6ViCdwupeikrCE6Q93YkXs5vo'
+        }
+        defaults {
+            publications('AAR1')
+            publishArtifacts = true
+            publishPom = true
         }
     }
 }

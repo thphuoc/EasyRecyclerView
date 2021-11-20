@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EasyRecyclerView">
+        <attr name="load_more" format="reference"/>
+        <attr name="layout_type" format="enum">
+            <enum name="VERTICAL" value="0"/>
+            <enum name="HORIZONTAL" value="1"/>
+            <enum name="GRID2" value="2"/>
+            <enum name="GRID3" value="3"/>
+            <enum name="GRID4" value="4"/>
+        </attr>
+    </declare-styleable>
+</resources>

@@ -70,3 +70,24 @@ listView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
             })
         }
 ```
+
+Easy to handle load more:
+```kotlin
+listView.setLoadMore(LoadMoreViewBinder {
+    //Load more in here
+    if (pageIndex < 4) {
+        Handler().postDelayed({
+            pageIndex++
+            listView.loadCompleted()
+            repeat(4) {
+                listView.addItem(DataItemViewBinder(this, UserDAO("User2 $pageIndex$it")) { data ->
+                    listView.removeItem(data)
+                })
+            }
+        }, 1000L)
+    } else {
+        listView.noMoreToLoad()
+    }
+})
+
+```

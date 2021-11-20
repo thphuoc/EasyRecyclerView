@@ -1,10 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         google()
         mavenCentral()
     }
     dependencies {
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.24.23'
+
         classpath "com.android.tools.build:gradle:7.0.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'

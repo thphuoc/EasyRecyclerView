@@ -3,6 +3,7 @@ package com.example.mda
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thphuoc.erv.LoadMoreViewBinder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,21 +33,25 @@ class MainActivity : AppCompatActivity() {
 
         listView.addItem(HozListViewBinder())
 
-        listView.setLoadMore(LoadMoreViewBinder {
-            if (pageIndex < 4) {
-                Handler().postDelayed({
-                    pageIndex++
-                    listView.loadCompleted()
-                    repeat(4) {
-                        listView.addItem(DataItemViewBinder(this, UserDAO("User2 $pageIndex$it")) { data ->
-                            listView.removeItem(data)
-                        })
-                    }
-                }, 1000L)
-            } else {
-                listView.noMoreToLoad()
-            }
-        })
+//        listView.setLoadMore(LoadMoreViewBinder {
+//            if (pageIndex < 4) {
+//                Handler().postDelayed({
+//                    pageIndex++
+//                    listView.loadCompleted()
+//                    repeat(4) {
+//                        listView.addItem(
+//                            DataItemViewBinder(
+//                                this,
+//                                UserDAO("User2 $pageIndex$it")
+//                            ) { data ->
+//                                listView.removeItem(data)
+//                            })
+//                    }
+//                }, 1000L)
+//            } else {
+//                listView.noMoreToLoad()
+//            }
+//        })
 
         btnAddTop.setOnClickListener {
             listView.addItem(DataItemViewBinder(this, UserDAO("User Top")) { data ->
@@ -58,6 +63,17 @@ class MainActivity : AppCompatActivity() {
             listView.addItem(DataItemViewBinder(this, UserDAO("User Bottom")) { data ->
                 listView.removeItem(data)
             }, listView.size())
+        }
+
+        edtSearch.addTextChangedListener { text ->
+            listView.filterBy {
+                when (it) {
+                    is DataItemViewBinder -> {
+                        it.user.name.lowercase().contains(text.toString().lowercase())
+                    }
+                    else -> true
+                }
+            }
         }
     }
 }

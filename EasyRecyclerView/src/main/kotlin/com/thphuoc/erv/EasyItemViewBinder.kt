@@ -4,7 +4,8 @@ import android.view.View
 
 interface EasyItemViewBinder {
     val viewResId: Int
-    fun isRecyclable() = false
 
     fun bind(view: View) {}
+    fun unbind() {}
+    fun sameContentWith(item: EasyItemViewBinder) : Boolean = true
 }

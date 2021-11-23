@@ -3,10 +3,10 @@ package com.thphuoc.erv
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Toast
+import androidx.recyclerview.widget.*
 import com.example.myapplication.R
+import java.lang.Exception
 import kotlin.math.max
 
 
@@ -89,6 +89,11 @@ class EasyRecyclerView @JvmOverloads constructor(
         mAdapter.notifyItemInserted(max(0, index))
     }
 
+    fun addAllItems(data: List<EasyItemViewBinder>, index: Int = mAdapter.itemCount) {
+        mAdapter.addAllItems(data, index)
+        mAdapter.notifyItemInserted(max(0, index))
+    }
+
     fun clear() {
         mAdapter.removeAll()
         mAdapter.notifyItemRangeRemoved(0, mAdapter.itemCount)
@@ -99,6 +104,40 @@ class EasyRecyclerView @JvmOverloads constructor(
         if (index >= 0) {
             mAdapter.notifyItemRemoved(index)
         }
+    }
+
+    fun filterBy(
+        condition: (item: EasyItemViewBinder) -> Boolean
+    ) {
+        if(enableLoadMore) {
+            Exception("Please make sure no more to load.").printStackTrace()
+            return
+        }
+        val newList = mAdapter.filter {
+            if(it !is LoadMoreViewBinder) {
+                condition(it)
+            } else {
+                true
+            }
+        }
+        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int = mAdapter.size()
+
+            override fun getNewListSize(): Int = newList.size
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return mAdapter.getItemAtPosition(oldItemPosition) === newList[newItemPosition]
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return mAdapter.getItemAtPosition(oldItemPosition)
+                    .sameContentWith(newList[newItemPosition])
+            }
+        })
+
+        diffResult.dispatchUpdatesTo(mAdapter)
+        mAdapter.update(newList)
+
     }
 
     fun size() = mAdapter.itemCount

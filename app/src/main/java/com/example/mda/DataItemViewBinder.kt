@@ -18,4 +18,8 @@ data class DataItemViewBinder(
             onRemove(this)
         }
     }
+
+    override fun sameContentWith(item: EasyItemViewBinder): Boolean {
+        return if(item is DataItemViewBinder) user.name == item.user.name else false
+    }
 }

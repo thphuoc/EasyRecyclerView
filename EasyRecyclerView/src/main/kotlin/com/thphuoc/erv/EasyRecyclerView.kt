@@ -61,7 +61,7 @@ class EasyRecyclerView @JvmOverloads constructor(
             if (!canScroll) {
                 canScroll = canScrollHorizontally(1)
             }
-            if (canScroll && !isLoadingMore) {
+            if (!canScroll && !isLoadingMore) {
                 isLoadingMore = true
                 addItem(loadMoreViewBinder)
                 loadMoreViewBinder.loadMore()
@@ -110,7 +110,7 @@ class EasyRecyclerView @JvmOverloads constructor(
         condition: (item: EasyItemViewBinder) -> Boolean
     ) {
         if(enableLoadMore) {
-            Exception("Please make sure no more to load.").printStackTrace()
+            noMoreToLoad()
             return
         }
         val newList = mAdapter.filter {

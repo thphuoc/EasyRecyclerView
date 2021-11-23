@@ -33,25 +33,25 @@ class MainActivity : AppCompatActivity() {
 
         listView.addItem(HozListViewBinder())
 
-//        listView.setLoadMore(LoadMoreViewBinder {
-//            if (pageIndex < 4) {
-//                Handler().postDelayed({
-//                    pageIndex++
-//                    listView.loadCompleted()
-//                    repeat(4) {
-//                        listView.addItem(
-//                            DataItemViewBinder(
-//                                this,
-//                                UserDAO("User2 $pageIndex$it")
-//                            ) { data ->
-//                                listView.removeItem(data)
-//                            })
-//                    }
-//                }, 1000L)
-//            } else {
-//                listView.noMoreToLoad()
-//            }
-//        })
+        listView.setLoadMore(LoadMoreViewBinder {
+            if (pageIndex < 4) {
+                Handler().postDelayed({
+                    pageIndex++
+                    listView.loadCompleted()
+                    repeat(4) {
+                        listView.addItem(
+                            DataItemViewBinder(
+                                this,
+                                UserDAO("User2 $pageIndex$it")
+                            ) { data ->
+                                listView.removeItem(data)
+                            })
+                    }
+                }, 1000L)
+            } else {
+                listView.noMoreToLoad()
+            }
+        })
 
         btnAddTop.setOnClickListener {
             listView.addItem(DataItemViewBinder(this, UserDAO("User Top")) { data ->

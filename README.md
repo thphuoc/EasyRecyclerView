@@ -114,3 +114,18 @@ Example:
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_type="HORIZONTAL"/>
 ```
+
+Additional Features:
+1. Use DiffUtil to filter data. Please note that, when perform filter, load more will be auto disable
+```kotlin
+edtSearch.addTextChangedListener { text ->
+    listView.filterBy {
+        when (it) {
+            is DataItemViewBinder -> {
+                it.user.name.lowercase().contains(text.toString().lowercase())
+            }
+            else -> true
+        }
+    }
+}
+```

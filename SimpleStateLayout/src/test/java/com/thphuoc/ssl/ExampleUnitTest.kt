@@ -1,4 +1,4 @@
-package com.example.mda
+package com.thphuoc.ssl
 
 import org.junit.Test
 
@@ -12,10 +12,6 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        val a = listOf(1,2,3,4)
-        val b = listOf(2,3, 5)
-        val c = listOf(4, 5, 3)
-
-        println(a.intersect(b).intersect(c))
+        assertEquals(4, 2 + 2)
     }
 }

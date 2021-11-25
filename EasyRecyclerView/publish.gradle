@@ -1,32 +1,42 @@
-apply plugin: "com.jfrog.artifactory"
-apply plugin: "maven-publish" // Apply this plugin at the top of your library build.gradle
+apply plugin: 'maven-publish' // Apply this plugin at the top of your library build.gradle
 
-build.finalizedBy(artifactoryPublish)
-artifactoryPublish.dependsOn(build)
-publishing {
-    publications {
-        AAR1(MavenPublication) {
-            groupId "com.thphuoc.erc"
-            artifactId "EasyRecyclerView"
-            version "1.0.1"
-            artifact("$buildDir/outputs/aar/EasyRecyclerView-release.aar")
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties"))) //Set env variable GPR_USER & GPR_API_KEY if not adding a properties file
 
-        }
-    }
+def getVersionName = { ->
+    return "1.0.2" // Replace with version Name
 }
 
-artifactory {
-    contextUrl = "https://bintray.com/jfrog/artifactory:8080"
-    publish {
-        repository {
-            repoKey = 'default-gradle-dev'
-            username = 'tranhuuphuoc88@gmail.com'
-            password = 'AP6ViCdwupeikrCE6Q93YkXs5vo'
+def getArtificatId = { ->
+    return "EasyRecyclerView" // Replace with library name ID
+}
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.thphuoc.erv' // Replace with group ID
+            artifactId getArtificatId()
+            version getVersionName()
+            artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
         }
-        defaults {
-            publications('AAR1')
-            publishArtifacts = true
-            publishPom = true
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            /** Configure path of your package repository on Github
+             ** Replace GITHUB_USERID with your/organisation Github userID
+             ** and REPOSITORY with the repository name on GitHub
+             */
+            url = uri("https://maven.pkg.github.com/thphuoc/EasyRecyclerView")
+            credentials {
+                /** Create github.properties in root project folder file with
+                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
+                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
+
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
         }
     }
 }

@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 rootProject.name = "ModularArchitecture"
 include ':app'
 include ':EasyRecyclerView'
+include ':SimpleStateLayout'

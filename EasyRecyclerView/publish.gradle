@@ -36,6 +36,7 @@ publishing {
 
                 username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+                println "GitHubPackages build.gradle\n\tusername=$username\n\ttoken=$password"
             }
         }
     }

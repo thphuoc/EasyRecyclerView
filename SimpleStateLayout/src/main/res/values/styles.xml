@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SimpleStateLayout">
-        <attr name="layout" format="reference"/>
+        <attr name="layout_empty" format="reference"/>
+        <attr name="layout_content" format="reference"/>
+        <attr name="layout_init" format="reference"/>
+        <attr name="layout_connection_error" format="reference"/>
+        <attr name="layout_app_error" format="reference"/>
+        <attr name="layout_loading" format="reference"/>
     </declare-styleable>
 </resources>

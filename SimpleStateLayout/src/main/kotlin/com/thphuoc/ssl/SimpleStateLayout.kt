@@ -10,7 +10,6 @@ class SimpleStateLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
-    private var state = State.INIT
     private val stateView = hashMapOf<State, Int>()
     private val defaultLayout = R.layout.view_state
 
@@ -23,22 +22,20 @@ class SimpleStateLayout @JvmOverloads constructor(
         @LayoutRes loadingLayout: Int = defaultLayout,
         @LayoutRes emptyLayout: Int = defaultLayout,
         @LayoutRes connectionErrorLayout: Int = defaultLayout,
-        @LayoutRes appErrorLayout: Int = defaultLayout
+        @LayoutRes appErrorLayout: Int = defaultLayout,
+        @LayoutRes contentView: Int = defaultLayout
     ) {
         stateView[State.INIT] = initLayout
         stateView[State.LOADING] = loadingLayout
         stateView[State.EMPTY] = emptyLayout
         stateView[State.CONNECTION_ERROR] = connectionErrorLayout
         stateView[State.APP_ERROR] = appErrorLayout
+        stateView[State.CONTENT] = contentView
     }
 
     fun showState(state: State) {
         removeAllViews()
         LayoutInflater.from(context).inflate(stateView[state]!!, this, true)
-    }
-
-    fun showEmpty() {
-
     }
 
     enum class State {

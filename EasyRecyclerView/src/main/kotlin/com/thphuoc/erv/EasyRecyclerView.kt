@@ -3,10 +3,8 @@ package com.thphuoc.erv
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.*
 import com.example.myapplication.R
-import java.lang.Exception
 import kotlin.math.max
 
 
@@ -17,6 +15,14 @@ class EasyRecyclerView @JvmOverloads constructor(
     var enableLoadMore = false
     private var isLoadingMore = false
     private var loadMoreViewBinder = LoadMoreViewBinder {}
+    private val VERTICAL = 0
+    private val HORIZONTAL = 1
+    private val VGRID2 = 2
+    private val VGRID3 = 3
+    private val VGRID4 = 4
+    private val HGRID2 = 5
+    private val HGRID3 = 6
+    private val HGRID4 = 7
 
     init {
         context.theme.obtainStyledAttributes(
@@ -29,13 +35,58 @@ class EasyRecyclerView @JvmOverloads constructor(
                 val layoutType = getInt(R.styleable.EasyRecyclerView_layout_type, 0)
                 Log.d("DEBUG", "layoutType: $layoutType")
                 layoutManager = when (layoutType) {
-                    1 -> {
+                    VERTICAL -> {
+                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    }
+                    HORIZONTAL -> {
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     }
-                    2 -> {
-                        GridLayoutManager(context, 2, VERTICAL, false)
+                    VGRID2 -> {
+                        GridLayoutManager(context, VGRID2, RecyclerView.VERTICAL, false).apply {
+                            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                                override fun getSpanSize(position: Int): Int {
+                                    return when (getViewBinderAtPosition(position)) {
+                                        is LoadMoreViewBinder -> VGRID2
+                                        else -> 1
+                                    }
+                                }
+                            }
+                        }
                     }
-                    else -> LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    VGRID3 -> {
+                        GridLayoutManager(context, VGRID3, RecyclerView.VERTICAL, false).apply {
+                            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                                override fun getSpanSize(position: Int): Int {
+                                    return when (getViewBinderAtPosition(position)) {
+                                        is LoadMoreViewBinder -> VGRID3
+                                        else -> 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    VGRID4 -> {
+                        GridLayoutManager(context, VGRID4, RecyclerView.VERTICAL, false).apply {
+                            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                                override fun getSpanSize(position: Int): Int {
+                                    return when (getViewBinderAtPosition(position)) {
+                                        is LoadMoreViewBinder -> VGRID4
+                                        else -> 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    HGRID2 -> {
+                        GridLayoutManager(context, 2, RecyclerView.HORIZONTAL, false)
+                    }
+                    HGRID3 -> {
+                        GridLayoutManager(context, 3, RecyclerView.HORIZONTAL, false)
+                    }
+                    HGRID4 -> {
+                        GridLayoutManager(context, 4, RecyclerView.HORIZONTAL, false)
+                    }
+                    else -> LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 }
             }
 
@@ -106,15 +157,22 @@ class EasyRecyclerView @JvmOverloads constructor(
         }
     }
 
+    fun getViewBinderAtPosition(position: Int): EasyItemViewBinder? {
+        if (position >= 0 && position < mAdapter.size()) {
+            return mAdapter.getItemAtPosition(position)
+        }
+        return null
+    }
+
     fun filterBy(
         condition: (item: EasyItemViewBinder) -> Boolean
     ) {
-        if(enableLoadMore) {
+        if (enableLoadMore) {
             noMoreToLoad()
             return
         }
         val newList = mAdapter.filter {
-            if(it !is LoadMoreViewBinder) {
+            if (it !is LoadMoreViewBinder) {
                 condition(it)
             } else {
                 true

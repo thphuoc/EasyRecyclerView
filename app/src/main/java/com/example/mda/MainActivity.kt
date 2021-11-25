@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         repeat(10) {
             listView.addItem(DataItemViewBinder(this, UserDAO("User1 $it")) { data ->
                 listView.removeItem(data)

@@ -78,13 +78,40 @@ class EasyRecyclerView @JvmOverloads constructor(
                         }
                     }
                     HGRID2 -> {
-                        GridLayoutManager(context, 2, RecyclerView.HORIZONTAL, false)
+                        GridLayoutManager(context, 2, RecyclerView.HORIZONTAL, false).apply {
+                            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                                override fun getSpanSize(position: Int): Int {
+                                    return when (getViewBinderAtPosition(position)) {
+                                        is LoadMoreViewBinder -> VGRID2
+                                        else -> 1
+                                    }
+                                }
+                            }
+                        }
                     }
                     HGRID3 -> {
-                        GridLayoutManager(context, 3, RecyclerView.HORIZONTAL, false)
+                        GridLayoutManager(context, 3, RecyclerView.HORIZONTAL, false).apply {
+                            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                                override fun getSpanSize(position: Int): Int {
+                                    return when (getViewBinderAtPosition(position)) {
+                                        is LoadMoreViewBinder -> VGRID3
+                                        else -> 1
+                                    }
+                                }
+                            }
+                        }
                     }
                     HGRID4 -> {
-                        GridLayoutManager(context, 4, RecyclerView.HORIZONTAL, false)
+                        GridLayoutManager(context, 4, RecyclerView.HORIZONTAL, false).apply {
+                            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                                override fun getSpanSize(position: Int): Int {
+                                    return when (getViewBinderAtPosition(position)) {
+                                        is LoadMoreViewBinder -> VGRID4
+                                        else -> 1
+                                    }
+                                }
+                            }
+                        }
                     }
                     else -> LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 }

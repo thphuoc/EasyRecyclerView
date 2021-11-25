@@ -6,11 +6,15 @@
         <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/EasyRecyclerView/src/main/res/layout/view_load_more.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/SimpleStateLayout/src/main/res/layout/view_state.xml" value="0.3625" />
         <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/activity_main.xml" value="0.28940217391304346" />
+        <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/activity_state.xml" value="0.3625" />
         <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/card_item.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/hoz_list_view.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/item_view.xml" value="0.2368659420289855" />
         <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/item_view1.xml" value="0.2368659420289855" />
         <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/item_view_header.xml" value="0.2368659420289855" />
+        <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/view_empty.xml" value="0.20104166666666667" />
+        <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/view_error.xml" value="0.20104166666666667" />
+        <entry key="..\:/Users/phuoc.tran/AndroidStudioProjects/ModularArchitecture/app/src/main/res/layout/view_loading.xml" value="0.20104166666666667" />
       </map>
     </option>
   </component>

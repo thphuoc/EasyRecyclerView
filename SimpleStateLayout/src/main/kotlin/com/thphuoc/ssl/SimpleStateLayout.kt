@@ -14,7 +14,20 @@ class SimpleStateLayout @JvmOverloads constructor(
     private val defaultLayout = R.layout.view_state
 
     init {
-        setLayout()
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.SimpleStateLayout,
+            0, 0
+        ).apply {
+            setLayout(
+                initLayout = getResourceId(R.styleable.SimpleStateLayout_layout_init, defaultLayout),
+                loadingLayout = getResourceId(R.styleable.SimpleStateLayout_layout_loading, defaultLayout),
+                emptyLayout = getResourceId(R.styleable.SimpleStateLayout_layout_empty, defaultLayout),
+                connectionErrorLayout = getResourceId(R.styleable.SimpleStateLayout_layout_connection_error, defaultLayout),
+                appErrorLayout = getResourceId(R.styleable.SimpleStateLayout_layout_app_error, defaultLayout),
+                contentView = getResourceId(R.styleable.SimpleStateLayout_layout_content, defaultLayout)
+            )
+        }
     }
 
     fun setLayout(

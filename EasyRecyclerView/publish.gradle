@@ -4,11 +4,11 @@ def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(rootProject.file("github.properties"))) //Set env variable GPR_USER & GPR_API_KEY if not adding a properties file
 
 def getVersionName = { ->
-    return "1.0.2" // Replace with version Name
+    return "1.0.3" // Replace with version Name
 }
 
 def getArtificatId = { ->
-    return "EasyRecyclerView" // Replace with library name ID
+    return "easyrecyclerview" // Replace with library name ID
 }
 
 publishing {
@@ -28,7 +28,7 @@ publishing {
              ** Replace GITHUB_USERID with your/organisation Github userID
              ** and REPOSITORY with the repository name on GitHub
              */
-            url = uri("https://maven.pkg.github.com/thphuoc/EasyRecyclerView")
+            url = uri("https://maven.pkg.github.com/thphuoc/easyrecyclerview")
             credentials {
                 /** Create github.properties in root project folder file with
                  ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
@@ -36,6 +36,7 @@ publishing {
 
                 username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+                println "GitHubPackage build.gradle\n\tusername:$username\n\ttoken=$password"
             }
         }
     }

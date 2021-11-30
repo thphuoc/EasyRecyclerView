@@ -24,5 +24,6 @@ class StateActivity : AppCompatActivity() {
         btnContent.setOnClickListener {
             simpleStateLayout.showState(SimpleStateLayout.State.CONTENT)
         }
+        simpleStateLayout.showState(SimpleStateLayout.State.EMPTY)
     }
 }

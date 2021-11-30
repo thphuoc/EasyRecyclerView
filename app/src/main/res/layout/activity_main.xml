@@ -25,6 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtSearch" />
 
+
     <com.thphuoc.erv.EasyRecyclerView
         android:id="@+id/listView"
         android:layout_width="match_parent"

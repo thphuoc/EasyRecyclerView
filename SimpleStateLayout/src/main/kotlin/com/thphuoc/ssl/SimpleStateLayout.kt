@@ -3,6 +3,7 @@ package com.thphuoc.ssl
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 
@@ -10,7 +11,7 @@ class SimpleStateLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
-    private val stateView = hashMapOf<State, Int>()
+    private val stateView = hashMapOf<State, View>()
     private val defaultLayout = R.layout.view_state
 
     init {
@@ -20,12 +21,30 @@ class SimpleStateLayout @JvmOverloads constructor(
             0, 0
         ).apply {
             setLayout(
-                initLayout = getResourceId(R.styleable.SimpleStateLayout_layout_init, defaultLayout),
-                loadingLayout = getResourceId(R.styleable.SimpleStateLayout_layout_loading, defaultLayout),
-                emptyLayout = getResourceId(R.styleable.SimpleStateLayout_layout_empty, defaultLayout),
-                connectionErrorLayout = getResourceId(R.styleable.SimpleStateLayout_layout_connection_error, defaultLayout),
-                appErrorLayout = getResourceId(R.styleable.SimpleStateLayout_layout_app_error, defaultLayout),
-                contentView = getResourceId(R.styleable.SimpleStateLayout_layout_content, defaultLayout)
+                initLayout = getResourceId(
+                    R.styleable.SimpleStateLayout_layout_init,
+                    defaultLayout
+                ),
+                loadingLayout = getResourceId(
+                    R.styleable.SimpleStateLayout_layout_loading,
+                    defaultLayout
+                ),
+                emptyLayout = getResourceId(
+                    R.styleable.SimpleStateLayout_layout_empty,
+                    defaultLayout
+                ),
+                connectionErrorLayout = getResourceId(
+                    R.styleable.SimpleStateLayout_layout_connection_error,
+                    defaultLayout
+                ),
+                appErrorLayout = getResourceId(
+                    R.styleable.SimpleStateLayout_layout_app_error,
+                    defaultLayout
+                ),
+                contentView = getResourceId(
+                    R.styleable.SimpleStateLayout_layout_content,
+                    defaultLayout
+                )
             )
         }
     }
@@ -38,17 +57,46 @@ class SimpleStateLayout @JvmOverloads constructor(
         @LayoutRes appErrorLayout: Int = defaultLayout,
         @LayoutRes contentView: Int = defaultLayout
     ) {
-        stateView[State.INIT] = initLayout
-        stateView[State.LOADING] = loadingLayout
-        stateView[State.EMPTY] = emptyLayout
-        stateView[State.CONNECTION_ERROR] = connectionErrorLayout
-        stateView[State.APP_ERROR] = appErrorLayout
-        stateView[State.CONTENT] = contentView
+        stateView[State.INIT] = initLayout.run {
+            val view = LayoutInflater.from(context).inflate(this, null, false)
+            addView(view)
+            view
+        }
+        stateView[State.LOADING] = loadingLayout.run {
+            val view = LayoutInflater.from(context).inflate(this, null, false)
+            addView(view)
+            view
+        }
+        stateView[State.EMPTY] = emptyLayout.run {
+            val view = LayoutInflater.from(context).inflate(this, null, false)
+            addView(view)
+            view
+        }
+        stateView[State.CONNECTION_ERROR] = connectionErrorLayout.run {
+            val view = LayoutInflater.from(context).inflate(this, null, false)
+            addView(view)
+            view
+        }
+        stateView[State.APP_ERROR] = appErrorLayout.run {
+            val view = LayoutInflater.from(context).inflate(this, null, false)
+            addView(view)
+            view
+        }
+        stateView[State.CONTENT] = contentView.run {
+            val view = LayoutInflater.from(context).inflate(this, null, false)
+            addView(view)
+            view
+        }
     }
 
     fun showState(state: State) {
-        removeAllViews()
-        LayoutInflater.from(context).inflate(stateView[state]!!, this, true)
+        stateView.keys.forEach {
+            stateView[it]?.visibility = if (state == it) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
     }
 
     enum class State {

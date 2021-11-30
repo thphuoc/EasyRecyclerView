@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnAddBottom.setOnClickListener {
+            listView.clear()
             listView.addItem(DataItemViewBinder(this, UserDAO("User Bottom")) { data ->
                 listView.removeItem(data)
             }, listView.size())

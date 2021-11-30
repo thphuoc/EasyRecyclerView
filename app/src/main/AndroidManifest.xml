@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ModularArchitecture">
         <activity
-            android:name=".StateActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

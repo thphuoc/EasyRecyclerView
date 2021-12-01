@@ -17,15 +17,15 @@ class EasyRecyclerView @JvmOverloads constructor(
     private var currentItemDecoration: GridSpacingItemDecoration? = null
     private var layoutType: LayoutType = LayoutType.VERTICAL
 
-    enum class LayoutType(val value: Int) {
-        VERTICAL(0),
-        HORIZONTAL(1),
-        VGRID2(2),
-        VGRID3(3),
-        VGRID4(4),
-        HGRID2(5),
-        HGRID3(6),
-        HGRID4(7);
+    enum class LayoutType(val value: Int, val spanCount: Int) {
+        VERTICAL(0, 1),
+        HORIZONTAL(1, 1),
+        VGRID2(2, 2),
+        VGRID3(3, 3),
+        VGRID4(4, 4),
+        HGRID2(5, 2),
+        HGRID3(6, 3),
+        HGRID4(7, 4);
 
         companion object {
             fun getType(index: Int) = values().firstOrNull { it.value == index } ?: VERTICAL
@@ -50,7 +50,7 @@ class EasyRecyclerView @JvmOverloads constructor(
 
 
                 currentItemDecoration?.apply { removeItemDecoration(this) }
-                currentItemDecoration = GridSpacingItemDecoration(layoutType.value, space, includeEdgeSpace)
+                currentItemDecoration = GridSpacingItemDecoration(layoutType.spanCount, space, includeEdgeSpace)
                 addItemDecoration(currentItemDecoration!!)
             }
             recycle()
@@ -59,7 +59,7 @@ class EasyRecyclerView @JvmOverloads constructor(
 
     fun setDecoration(space: Int, includeEdgeSpace: Boolean) {
         currentItemDecoration?.apply { removeItemDecoration(this) }
-        currentItemDecoration = GridSpacingItemDecoration(layoutType.value, space, includeEdgeSpace)
+        currentItemDecoration = GridSpacingItemDecoration(layoutType.spanCount, space, includeEdgeSpace)
         addItemDecoration(currentItemDecoration!!)
     }
 
@@ -71,72 +71,28 @@ class EasyRecyclerView @JvmOverloads constructor(
             LayoutType.HORIZONTAL -> {
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             }
-            LayoutType.VGRID2 -> {
-                GridLayoutManager(context, LayoutType.VGRID2.value, VERTICAL, false).apply {
-                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                        override fun getSpanSize(position: Int): Int {
-                            return when (getViewBinderAtPosition(position)) {
-                                is LoadMoreViewBinder -> LayoutType.VGRID2.value
-                                else -> 1
-                            }
-                        }
-                    }
-                }
-            }
-            LayoutType.VGRID3 -> {
-                GridLayoutManager(context, LayoutType.VGRID3.value, VERTICAL, false).apply {
-                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                        override fun getSpanSize(position: Int): Int {
-                            return when (getViewBinderAtPosition(position)) {
-                                is LoadMoreViewBinder -> LayoutType.VGRID3.value
-                                else -> 1
-                            }
-                        }
-                    }
-                }
-            }
+            LayoutType.VGRID2,
+            LayoutType.VGRID3,
             LayoutType.VGRID4 -> {
-                GridLayoutManager(context, LayoutType.VGRID4.value, VERTICAL, false).apply {
+                GridLayoutManager(context, layoutType.spanCount, VERTICAL, false).apply {
                     spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                         override fun getSpanSize(position: Int): Int {
                             return when (getViewBinderAtPosition(position)) {
-                                is LoadMoreViewBinder -> LayoutType.VGRID4.value
+                                is LoadMoreViewBinder -> layoutType.spanCount
                                 else -> 1
                             }
                         }
                     }
                 }
             }
-            LayoutType.HGRID2 -> {
-                GridLayoutManager(context, 2, HORIZONTAL, false).apply {
-                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                        override fun getSpanSize(position: Int): Int {
-                            return when (getViewBinderAtPosition(position)) {
-                                is LoadMoreViewBinder -> LayoutType.VGRID2.value
-                                else -> 1
-                            }
-                        }
-                    }
-                }
-            }
-            LayoutType.HGRID3 -> {
-                GridLayoutManager(context, 3, HORIZONTAL, false).apply {
-                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                        override fun getSpanSize(position: Int): Int {
-                            return when (getViewBinderAtPosition(position)) {
-                                is LoadMoreViewBinder -> LayoutType.VGRID3.value
-                                else -> 1
-                            }
-                        }
-                    }
-                }
-            }
+            LayoutType.HGRID2,
+            LayoutType.HGRID3,
             LayoutType.HGRID4 -> {
-                GridLayoutManager(context, 4, HORIZONTAL, false).apply {
+                GridLayoutManager(context, layoutType.spanCount, HORIZONTAL, false).apply {
                     spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                         override fun getSpanSize(position: Int): Int {
                             return when (getViewBinderAtPosition(position)) {
-                                is LoadMoreViewBinder -> LayoutType.VGRID4.value
+                                is LoadMoreViewBinder -> layoutType.spanCount
                                 else -> 1
                             }
                         }

@@ -12,5 +12,7 @@
             <enum name="HGRID3" value="6"/>
             <enum name="HGRID4" value="7"/>
         </attr>
+        <attr name="item_space" format="dimension"/>
+        <attr name="include_edge_space" format="boolean"/>
     </declare-styleable>
 </resources>

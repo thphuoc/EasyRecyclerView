@@ -129,3 +129,20 @@ edtSearch.addTextChangedListener { text ->
     }
 }
 ```
+
+Support grid decoration:
+- item_space: Grid spacing
+- include_edge_space: Include edge space or not
+```xml
+<com.thphuoc.erv.EasyRecyclerView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_type="VGRID2"
+        app:item_space="30dp"
+        app:include_edge_space="true"/>
+```
+Add decoration in Code:
+```kotlin
+listView.setDecoration(spanCount: Int, space: Int, includeEdgeSpace: Boolean)
+```

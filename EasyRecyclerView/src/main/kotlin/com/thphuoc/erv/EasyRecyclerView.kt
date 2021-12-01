@@ -14,6 +14,7 @@ class EasyRecyclerView @JvmOverloads constructor(
     var enableLoadMore = false
     private var isLoadingMore = false
     private var loadMoreViewBinder = LoadMoreViewBinder {}
+    private var currentItemDecoration: GridSpacingItemDecoration? = null
 
     enum class LayoutType(val value: Int) {
         VERTICAL(0),
@@ -37,14 +38,23 @@ class EasyRecyclerView @JvmOverloads constructor(
             0, 0
         ).apply {
 
-            if (hasValue(R.styleable.EasyRecyclerView_layout_type)) {
-                val layoutTypeIndex = getInt(R.styleable.EasyRecyclerView_layout_type, 0)
-                val layoutType = LayoutType.getType(layoutTypeIndex)
-                setLayoutType(layoutType)
-            }
+            val layoutTypeIndex = getInt(R.styleable.EasyRecyclerView_layout_type, 0)
+            val layoutType = LayoutType.getType(layoutTypeIndex)
+            setLayoutType(layoutType)
+
+            val spaceRes = getDimensionPixelSize(R.styleable.EasyRecyclerView_item_space, 0)
+            val includeEdgeSpace =
+                getBoolean(R.styleable.EasyRecyclerView_include_edge_space, false)
+            setDecoration(layoutType.value, spaceRes, includeEdgeSpace)
 
             recycle()
         }
+    }
+
+    fun setDecoration(spanCount: Int, space: Int, includeEdgeSpace: Boolean) {
+        currentItemDecoration?.apply { removeItemDecoration(this) }
+        currentItemDecoration = GridSpacingItemDecoration(spanCount, space, includeEdgeSpace)
+        addItemDecoration(currentItemDecoration!!)
     }
 
     fun setLayoutType(layoutType: LayoutType) {

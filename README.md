@@ -144,5 +144,5 @@ Support grid decoration:
 ```
 Add decoration in Code:
 ```kotlin
-listView.setDecoration(spanCount: Int, space: Int, includeEdgeSpace: Boolean)
+listView.setDecoration(space: Int, includeEdgeSpace: Boolean)
 ```

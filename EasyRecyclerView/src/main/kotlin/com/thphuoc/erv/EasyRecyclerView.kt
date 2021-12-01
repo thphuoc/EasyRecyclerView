@@ -15,6 +15,7 @@ class EasyRecyclerView @JvmOverloads constructor(
     private var isLoadingMore = false
     private var loadMoreViewBinder = LoadMoreViewBinder {}
     private var currentItemDecoration: GridSpacingItemDecoration? = null
+    private var layoutType: LayoutType = LayoutType.VERTICAL
 
     enum class LayoutType(val value: Int) {
         VERTICAL(0),
@@ -39,21 +40,26 @@ class EasyRecyclerView @JvmOverloads constructor(
         ).apply {
 
             val layoutTypeIndex = getInt(R.styleable.EasyRecyclerView_layout_type, 0)
-            val layoutType = LayoutType.getType(layoutTypeIndex)
+            layoutType = LayoutType.getType(layoutTypeIndex)
             setLayoutType(layoutType)
 
-            val spaceRes = getDimensionPixelSize(R.styleable.EasyRecyclerView_item_space, 0)
-            val includeEdgeSpace =
-                getBoolean(R.styleable.EasyRecyclerView_include_edge_space, false)
-            setDecoration(layoutType.value, spaceRes, includeEdgeSpace)
+            if(hasValue(R.styleable.EasyRecyclerView_item_space)) {
+                val space = getDimensionPixelSize(R.styleable.EasyRecyclerView_item_space, 0)
+                val includeEdgeSpace =
+                    getBoolean(R.styleable.EasyRecyclerView_include_edge_space, false)
 
+
+                currentItemDecoration?.apply { removeItemDecoration(this) }
+                currentItemDecoration = GridSpacingItemDecoration(layoutType.value, space, includeEdgeSpace)
+                addItemDecoration(currentItemDecoration!!)
+            }
             recycle()
         }
     }
 
-    fun setDecoration(spanCount: Int, space: Int, includeEdgeSpace: Boolean) {
+    fun setDecoration(space: Int, includeEdgeSpace: Boolean) {
         currentItemDecoration?.apply { removeItemDecoration(this) }
-        currentItemDecoration = GridSpacingItemDecoration(spanCount, space, includeEdgeSpace)
+        currentItemDecoration = GridSpacingItemDecoration(layoutType.value, space, includeEdgeSpace)
         addItemDecoration(currentItemDecoration!!)
     }
 

@@ -1,8 +1,11 @@
-## Welcome to GitHub Pages
+## Android EasyRecyclerView
 
-You can use the [editor on GitHub](https://github.com/thphuoc/EasyRecyclerView/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Bạn đã quá mệt mỏi với việc tạo Adapter và ViewHolder mỗi lần muốn hiển thị một danh sách.
+Nếu điều này lặp đi lặp lại thì quả thật là ngu xuẩn phải không nào :)
+Vâng, chính vì điều này mà tôi đã tạo ra EasyRecyclerView.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Khái niệm đơn giản của EasyRecyclerView như sau:
+![Image](https://github.com/thphuoc/EasyRecyclerView/blob/main/SharedScreenshot.jpg)
 
 ### Markdown
 

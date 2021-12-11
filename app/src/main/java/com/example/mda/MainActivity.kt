@@ -21,13 +21,6 @@ class MainActivity : AppCompatActivity() {
             }, 0)
         }
 
-        btnAddBottom.setOnClickListener {
-            listView.clear()
-            listView.addItem(DataItemViewBinder(this, UserDAO("User Bottom")) { data ->
-                listView.removeItem(data)
-            }, listView.size())
-        }
-
         edtSearch.addTextChangedListener { text ->
             listView.filterBy {
                 when (it) {

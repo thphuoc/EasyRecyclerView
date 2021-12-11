@@ -64,6 +64,7 @@ class EasyRecyclerView @JvmOverloads constructor(
     }
 
     fun setLayoutType(layoutType: LayoutType) {
+        this.layoutType = layoutType
         layoutManager = when (layoutType) {
             LayoutType.VERTICAL -> {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

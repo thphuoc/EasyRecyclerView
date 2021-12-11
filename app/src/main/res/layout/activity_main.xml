@@ -4,23 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/edtSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:hint="Search"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnAddTop"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvViewType"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Top"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="15dp"
+        android:text="Select view type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtSearch" />
@@ -30,20 +34,18 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_type="VGRID2"
-        app:item_space="30dp"
         app:include_edge_space="true"
-        app:layout_constraintBottom_toTopOf="@id/btnAddBottom"
+        app:item_space="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnAddTop"
+        app:layout_constraintTop_toBottomOf="@id/tvViewType"
+        app:layout_type="VGRID2"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
-        android:id="@+id/btnAddBottom"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddTop"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Bottom"
+        android:layout_margin="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

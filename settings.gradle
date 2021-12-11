@@ -3,10 +3,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
-rootProject.name = "ModularArchitecture"
+rootProject.name = "EasyRecyclerView"
 include ':app'
 include ':EasyRecyclerView'
-include ':SimpleStateLayout'

@@ -9,4 +9,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "EasyRecyclerView"
 include ':app'
-include ':EasyRecyclerView'
+include ':library'

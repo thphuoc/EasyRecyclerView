@@ -79,7 +79,8 @@ class EasyRecyclerView @JvmOverloads constructor(
                     spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                         override fun getSpanSize(position: Int): Int {
                             return when (getViewBinderAtPosition(position)) {
-                                is LoadMoreViewBinder -> layoutType.spanCount
+                                is LoadMoreViewBinder,
+                                is VerticalSectionItemViewBinder -> layoutType.spanCount
                                 else -> 1
                             }
                         }

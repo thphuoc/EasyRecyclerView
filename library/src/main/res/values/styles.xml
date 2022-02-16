@@ -14,5 +14,6 @@
         </attr>
         <attr name="item_space" format="dimension"/>
         <attr name="include_edge_space" format="boolean"/>
+        <attr name="draggable" format="boolean"/>
     </declare-styleable>
 </resources>

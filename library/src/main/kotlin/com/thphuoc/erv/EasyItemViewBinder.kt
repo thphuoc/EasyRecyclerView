@@ -8,4 +8,5 @@ interface EasyItemViewBinder {
     fun bind(view: View) {}
     fun unbind() {}
     fun sameContentWith(item: EasyItemViewBinder) : Boolean = true
+    fun getDraggableHandler() : Int? = null
 }

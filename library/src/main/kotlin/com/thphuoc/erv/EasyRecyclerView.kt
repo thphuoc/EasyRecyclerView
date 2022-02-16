@@ -16,6 +16,7 @@ class EasyRecyclerView @JvmOverloads constructor(
     private var loadMoreViewBinder = LoadMoreViewBinder {}
     private var currentItemDecoration: GridSpacingItemDecoration? = null
     private var layoutType: LayoutType = LayoutType.VERTICAL
+    private var onMovedItemListener : (from: Int, to: Int) -> Unit = {_,_->}
 
     enum class LayoutType(val value: Int, val spanCount: Int) {
         VERTICAL(0, 1),
@@ -43,15 +44,20 @@ class EasyRecyclerView @JvmOverloads constructor(
             layoutType = LayoutType.getType(layoutTypeIndex)
             setLayoutType(layoutType)
 
-            if(hasValue(R.styleable.EasyRecyclerView_item_space)) {
+            if (hasValue(R.styleable.EasyRecyclerView_item_space)) {
                 val space = getDimensionPixelSize(R.styleable.EasyRecyclerView_item_space, 0)
                 val includeEdgeSpace =
                     getBoolean(R.styleable.EasyRecyclerView_include_edge_space, false)
 
 
                 currentItemDecoration?.apply { removeItemDecoration(this) }
-                currentItemDecoration = GridSpacingItemDecoration(layoutType.spanCount, space, includeEdgeSpace)
+                currentItemDecoration =
+                    GridSpacingItemDecoration(layoutType.spanCount, space, includeEdgeSpace)
                 addItemDecoration(currentItemDecoration!!)
+            }
+            val draggable = getBoolean(R.styleable.EasyRecyclerView_draggable, false)
+            if (draggable) {
+                setDraggable()
             }
             recycle()
         }
@@ -59,8 +65,22 @@ class EasyRecyclerView @JvmOverloads constructor(
 
     fun setDecoration(space: Int, includeEdgeSpace: Boolean) {
         currentItemDecoration?.apply { removeItemDecoration(this) }
-        currentItemDecoration = GridSpacingItemDecoration(layoutType.spanCount, space, includeEdgeSpace)
+        currentItemDecoration =
+            GridSpacingItemDecoration(layoutType.spanCount, space, includeEdgeSpace)
         addItemDecoration(currentItemDecoration!!)
+    }
+
+    fun setDraggable() {
+        mAdapter.setDraggable(this)
+    }
+
+    fun moveItem(from: Int, to: Int) {
+        mAdapter.moveItem(from, to)
+        onMovedItemListener(from, to)
+    }
+
+    fun setOnItemMoved(onItemMoved:(from: Int, to: Int) -> Unit) {
+        this.onMovedItemListener = onItemMoved
     }
 
     fun setLayoutType(layoutType: LayoutType) {
@@ -113,6 +133,10 @@ class EasyRecyclerView @JvmOverloads constructor(
         this.adapter = mAdapter
 
         handleLoadMore()
+    }
+
+    fun getAllViewBinders(): List<EasyItemViewBinder> {
+        return mAdapter.getAllItems()
     }
 
     private fun handleLoadMore() {

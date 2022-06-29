@@ -4,4 +4,6 @@ import com.thphuoc.erv.EasyItemViewBinder
 
 class HozItemViewBinder : EasyItemViewBinder {
     override val viewResId: Int = R.layout.card_item
+
+    override fun getDraggableHandler(): Int = R.id.imgHandler
 }

@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         app:layout_type="VGRID2"
         app:item_space="10dp"
+        app:draggable="true"
         app:include_edge_space="true"
         android:id="@+id/recyclerView"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

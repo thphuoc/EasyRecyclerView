@@ -146,3 +146,30 @@ Add decoration in Code:
 ```kotlin
 listView.setDecoration(space: Int, includeEdgeSpace: Boolean)
 ```
+
+Update list use DiffUtils:
+```listView.updateViewBinders(newList: List<EasyItemViewBinder>)```
+In your ViewBinder, example:
+```kotlin
+class PeopleItemViewBinder(val contentData: People) : EasyItemViewBinder {
+    //Override compare function in order to compare between 2 items
+    override fun sameContentWith(item: EasyItemViewBinder) : Boolean {
+        return (item as PeopleItemViewBinder).contentData === this.contentData
+    }
+}
+```
+
+Support draggable:
+In your ViewBinder override the function getDraggableHandler. Example:
+```kotlin
+class PeopleItemViewBinder(val contentData: People) : EasyItemViewBinder {
+    //Override compare function in order to compare between 2 items
+    override fun getDraggableHandler() : Int {
+        return R.layout.view_handler //This is a view which user touch down to start drag
+    }
+}
+```
+
+How to implement?
+Download aar file and add into your project library folder:
+[aar](/releases/easyrecyclerview-release_v100.aar)

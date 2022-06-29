@@ -198,6 +198,27 @@ class EasyRecyclerView @JvmOverloads constructor(
         return null
     }
 
+    fun updateViewBinders(newList: List<EasyItemViewBinder>) {
+        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int = mAdapter.size()
+
+            override fun getNewListSize(): Int = newList.size
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return mAdapter.getItemAtPosition(oldItemPosition)
+                    .sameContentWith(newList[newItemPosition])
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return mAdapter.getItemAtPosition(oldItemPosition)
+                    .sameContentWith(newList[newItemPosition])
+            }
+        })
+
+        diffResult.dispatchUpdatesTo(mAdapter)
+        mAdapter.update(newList)
+    }
+
     fun filterBy(
         condition: (item: EasyItemViewBinder) -> Boolean
     ) {

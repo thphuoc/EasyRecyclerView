@@ -2,7 +2,11 @@ package com.thphuoc.erv
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.recyclerview.widget.*
+import android.util.Log
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import kotlin.math.max
 
@@ -16,7 +20,7 @@ class EasyRecyclerView @JvmOverloads constructor(
     private var loadMoreViewBinder = LoadMoreViewBinder {}
     private var currentItemDecoration: GridSpacingItemDecoration? = null
     private var layoutType: LayoutType = LayoutType.VERTICAL
-    private var onMovedItemListener : (from: Int, to: Int) -> Unit = {_,_->}
+    private var onMovedItemListener: (from: Int, to: Int) -> Unit = { _, _ -> }
 
     enum class LayoutType(val value: Int, val spanCount: Int) {
         VERTICAL(0, 1),
@@ -79,7 +83,7 @@ class EasyRecyclerView @JvmOverloads constructor(
         onMovedItemListener(from, to)
     }
 
-    fun setOnItemMoved(onItemMoved:(from: Int, to: Int) -> Unit) {
+    fun setOnItemMoved(onItemMoved: (from: Int, to: Int) -> Unit) {
         this.onMovedItemListener = onItemMoved
     }
 
@@ -142,13 +146,18 @@ class EasyRecyclerView @JvmOverloads constructor(
     private fun handleLoadMore() {
         setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (!enableLoadMore) return@setOnScrollChangeListener
-            var canScroll = canScrollVertically(1)
-            if (!canScroll) {
-                canScroll = canScrollHorizontally(1)
-            }
-            if (!canScroll && !isLoadingMore) {
+
+            val lastItemVisible =
+                (layoutManager as? LinearLayoutManager)?.findLastCompletelyVisibleItemPosition()
+                    ?: (layoutManager as? GridLayoutManager)?.findFirstVisibleItemPosition()
+                    ?: 0
+            val firstItemVisible = (layoutManager as? LinearLayoutManager)?.findFirstCompletelyVisibleItemPosition()
+                ?: (layoutManager as? GridLayoutManager)?.findLastVisibleItemPosition()
+                ?: 0
+
+            if (lastItemVisible == mAdapter.size() - (lastItemVisible - firstItemVisible) && !isLoadingMore) {
                 isLoadingMore = true
-                addItem(loadMoreViewBinder)
+                addLoadMoreItem(loadMoreViewBinder, mAdapter.itemCount)
                 loadMoreViewBinder.loadMore()
             }
         }
@@ -172,6 +181,11 @@ class EasyRecyclerView @JvmOverloads constructor(
     fun addItem(data: EasyItemViewBinder, index: Int = mAdapter.itemCount) {
         mAdapter.addItem(data, index)
         mAdapter.notifyItemInserted(max(0, index))
+    }
+
+    private fun addLoadMoreItem(data: EasyItemViewBinder, index: Int = mAdapter.itemCount) {
+        mAdapter.addItem(data, index)
+        post { mAdapter.notifyItemInserted(max(0, index)) }
     }
 
     fun addAllItems(data: List<EasyItemViewBinder>, index: Int = mAdapter.itemCount) {
